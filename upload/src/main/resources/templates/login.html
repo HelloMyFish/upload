@@ -33,8 +33,8 @@
     账户:<input type="text" name="username">
     密码:<input type="password" name="password">
     <input type="button" value="提交" onclick="f()">
-    <input type="text" name="publicKeyExponent" th:value="${publicKeyExponent}">
-    <input type="text" name="publicKeyModulus" th:value="${publicKeyModulus}">
+    <input hidden="hidden" type="text" name="publicKeyExponent" th:value="${publicKeyExponent}">
+    <input hidden="hidden" type="text" name="publicKeyModulus" th:value="${publicKeyModulus}">
 </form>
 <a th:href="@{/test1}">a标签</a>
 </body>
