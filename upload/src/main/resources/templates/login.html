@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="/js/jquery-3.3.1.min.js"></script>
+    <!--<script type="text/javascript" src="/js/rsa.js"></script>-->
+    <script type="text/javascript" src="/js/security.js"></script>
+    <script type="text/javascript">
+        function f() {
+            var username = $("input[name='username']").val();
+            var password = $("input[name='password']").val();
+            var publicKeyExponent = $("input[name='publicKeyExponent']").val();
+            var publicKeyModulus = $("input[name='publicKeyModulus']").val();
+            RSAUtils.setMaxDigits(200);
+//            var key = new RSAUtils.getKeyPair("${publicKeyExponent}", "${publicKeyModulus}");
+            var key = new RSAUtils.getKeyPair(publicKeyExponent, "", publicKeyModulus);
+            var encrypedPwd = RSAUtils.encryptedString(key, password.split("").reverse().join(""));
+            $.ajax({
+                url: "login",
+                method: "POST",
+                data: "username=" + username + "&password=" + encrypedPwd,
+                success: function (msg) {
+                    alert(msg);
+                    window.location.href = "html/index.html"
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<form id="loginForm">
+    账户:<input type="text" name="username">
+    密码:<input type="password" name="password">
+    <input type="button" value="提交" onclick="f()">
+    <input type="text" name="publicKeyExponent" th:value="${publicKeyExponent}">
+    <input type="text" name="publicKeyModulus" th:value="${publicKeyModulus}">
+</form>
+<a th:href="@{/test1}">a标签</a>
+</body>
+</html>
